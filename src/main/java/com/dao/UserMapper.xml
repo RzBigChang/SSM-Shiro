@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.UserMapper">
+	<resultMap type="com.entity.User" id="userList">
+		<id property="id" column="id" />
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+	</resultMap>
+	<!--查询用户信息  -->
+	<select id="findUser" resultMap="userList">
+		select * from user
+	</select>
+	<!-- 根据id查询用户信息 -->
+	<select id="getUserById" resultType="com.entity.User">
+		select * from user where id=#{id}
+	</select>
+	<!-- 添加用户信息 -->
+	<insert id="addUser" parameterType="com.entity.User">
+		insert into user(username,saltPassword,password)value(#{username},#{saltPassword},#{password})
+	</insert>
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="com.entity.User">
+		
+	</update>
+	<!-- 删除用户信息 -->
+	<delete id="delUser" parameterType="Integer"></delete>
+	
+	
+</mapper>

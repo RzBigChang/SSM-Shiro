@@ -1,0 +1,17 @@
+{
+  "plugins": {
+    "guess-types": {
+      
+    },
+    "aui1.5.x": {
+      
+    },
+    "yui3": {
+      
+    }
+  },
+  "libs": [
+    "ecma5",
+    "browser"
+  ]
+}
