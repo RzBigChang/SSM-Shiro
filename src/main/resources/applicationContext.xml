@@ -13,6 +13,9 @@
     http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
     http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<import resource="classpath:applicationContext-redis.xml"/>
+	
 	<!-- 引入database.properties文件 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">

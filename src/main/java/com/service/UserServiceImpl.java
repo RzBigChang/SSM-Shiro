@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.dao.UserMapper;
@@ -13,19 +14,15 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserMapper userMapper;
 //	@SuppressWarnings("rawtypes")
-//	@Autowired
-//	private RedisTemplate redisTemplate;
+	@Autowired
+	private RedisTemplate redisTemplate;
 	@Override
 	public List<User> findUser() {
 		List<User> list=userMapper.findUser();
-//		if(list!=null) {
-//			//加入缓存
-//			while (redisTemplate.opsForList().size("user1")>0) {
-//					redisTemplate.opsForList().leftPop("user1");
-//					}
-//			redisTemplate.opsForList().rightPushAll("user1", list);
-//			redisTemplate.expire("user1", 1, TimeUnit.DAYS);
-//		}
+		if(list!=null) {
+			//加入缓存
+			redisTemplate.opsForList().rightPushAll("list",list);
+		}
 		return list;
 	}
 

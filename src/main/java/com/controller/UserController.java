@@ -11,6 +11,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,17 +27,12 @@ public class UserController {
 	
 	private RandomNumberGenerator randomNumberGenerator=new SecureRandomNumberGenerator();
 //	@SuppressWarnings("rawtypes")
-//	@Autowired
-//	private RedisTemplate redisTemplate;
+	@Autowired
+	private RedisTemplate redisTemplate;
 	//查看用户信息
 	@RequestMapping("/findUser")
 	public String findUser(ModelMap model) {
-//		List<User> list=redisTemplate.opsForList().range("user1", 0, -1);
-//		if(list.size()>0) {
-//			list=redisTemplate.opsForList().range("user1", 0, -1);
-//		}else {
 	List<User>	 list=userService.findUser();
-		//}
 		model.addAttribute("list", list);
 		return "findUser";
 	}
