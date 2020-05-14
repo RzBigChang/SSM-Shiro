@@ -23,10 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!-- 修改用户信息 -->
 	<update id="updateUser" parameterType="com.entity.User">
-		
+		UPDATE user SET username=#{username} where id=#{id} 
 	</update>
 	<!-- 删除用户信息 -->
-	<delete id="delUser" parameterType="Integer"></delete>
+	<delete id="delUser" parameterType="Integer">
+		delete from user where id=#{id}
+	</delete>
 	
 	
 </mapper>

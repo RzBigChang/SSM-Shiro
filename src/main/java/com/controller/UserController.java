@@ -3,6 +3,7 @@ package com.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.entity.User;
@@ -60,6 +62,38 @@ public class UserController {
 			out.print(json);
 		}else {
 			print(result, sp);
+		}
+	}
+	//查询用户回显数据
+	@RequestMapping("RequerId")
+	public String getUserById(Map<String,Object>map,int id) {
+		User user=new User();
+		user=userService.getUserById(id);
+		map.put("user",user);
+		return "Update";
+	}
+	//修改用户信息
+	@RequestMapping("Update")
+	public void Update(User user,HttpServletResponse pse) throws IOException {
+		int result=userService.updateUser(user);
+		if(result==1) {
+			String json=JSON.toJSONString(result);
+			PrintWriter out=pse.getWriter();
+			out.print(json);
+		}else {
+			print(result, pse);
+		}
+	}
+	//删除用户
+	@RequestMapping(value = "/Delete", method = RequestMethod.POST)
+	public void Delete(int id,HttpServletResponse res) throws IOException {
+		int result=userService.delUser(id);
+		if(result==1) {
+			String json=JSON.toJSONString(result);
+			PrintWriter out=res.getWriter();
+			out.print(json);
+		}else {
+			print(result,res);
 		}
 	}
 	public void print(Object msg,HttpServletResponse rep) throws IOException {
