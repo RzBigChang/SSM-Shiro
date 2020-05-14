@@ -28,13 +28,16 @@
 		<property name="url" value="${url}"/>
 		<property name="username" value="${user}"/>
 		<property name="password" value="${password}"/>
+	
 	</bean>
 	<!-- 配置SqlSessionFactoryBean -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 引入数据源组件 -->
 		<property name="dataSource" ref="dataSource"/>
 		<!-- 引入MyBatis配置文件中的配置 -->
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:dao*.xml"/>
+		<!-- 配置别名 -->
+		<!--  <property name="typeAliases" value="com.entity"/>  -->	
 	</bean>
 	<!-- 引入Dao -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

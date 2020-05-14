@@ -1,6 +1,8 @@
 package com.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,8 @@ public class UserServiceImpl implements UserService{
 	public List<User> findUser() {
 		List<User> list=userMapper.findUser();
 		if(list!=null) {
-			//加入缓存
-			redisTemplate.opsForList().rightPushAll("list",list);
+			//加入缓存List
+			redisTemplate.opsForList().rightPushAll("List",list);
 		}
 		return list;
 	}
@@ -35,18 +37,27 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int addUser(User user) {
 		int result=userMapper.addUser(user);
+		if(result==1) {
+			redisTemplate.delete("list");
+		}
 		return result;
 	}
 
 	@Override
 	public int updateUser(User user) {
 		int result=userMapper.updateUser(user);
+		if(result==1) {
+			redisTemplate.delete("list");
+		}
 		return result;
 	}
 
 	@Override
 	public int delUser(int id) {
 		int result=userMapper.delUser(id);
+		if(result==1) {
+			redisTemplate.delete("list");
+		}
 		return result;
 	}
 

@@ -56,11 +56,6 @@
         <property name="enableTransactionSupport" value="false" />
     </bean>
 
-    <!-- 对string操作的封装 -->
-    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <constructor-arg ref="jedisConnectionFactory" />
-        <!-- 开启REIDS事务支持 -->
-        <property name="enableTransactionSupport" value="false" />
-    </bean>
+    
 
 </beans>
