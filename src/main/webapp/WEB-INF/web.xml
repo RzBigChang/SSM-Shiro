@@ -23,6 +23,10 @@
   <filter-mapping>
   	<filter-name>shiroFilter</filter-name>
   	<url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
   </filter-mapping>
   <servlet>
     <servlet-name>springmvc</servlet-name>
@@ -38,6 +42,7 @@
   <servlet-mapping>
     <servlet-name>springmvc</servlet-name>
     <url-pattern>/</url-pattern>
+    
   </servlet-mapping>
   <context-param>
     <param-name>contextConfigLocation</param-name>

@@ -77,9 +77,18 @@ public class UserController {
 	@RequiresPermissions("1")
 	@RequestMapping("RequerId")
 	public String getUserById(Map<String,Object>map,int id) {
-		User user=new User();
-		user=userService.getUserById(id);
-		map.put("user",user);
+		try {
+			User user=new User();
+			user=userService.getUserById(id);
+			map.put("user",user);
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			return "账号密码错误";
+		}catch (AuthorizationException e) {
+			e.printStackTrace();
+			return "redirect:MyJsp";
+		}
+		
 		return "Update";
 	}
 	//修改用户信息
@@ -112,6 +121,7 @@ public class UserController {
 		return "login";
 	}
 	//登录方法
+	
 	@RequestMapping("login")
 	public String login(User user,Map<String,Object>map,HttpServletRequest request,HttpServletResponse resp) {
 		Subject subject=SecurityUtils.getSubject();
@@ -130,6 +140,12 @@ public class UserController {
 		return "redirect:/findUser";
 		
 	}
+	//跳转到没有权限页面
+	@RequestMapping("MyJsp")
+	public String MyJsp() {
+		return "MyJsp";
+	}
+	
 	public void print(Object msg,HttpServletResponse rep) throws IOException {
 		String info=JSON.toJSONString(msg);
 		PrintWriter out=rep.getWriter();
