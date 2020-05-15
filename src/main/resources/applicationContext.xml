@@ -73,7 +73,7 @@
     	<!-- Shiro核心安全接口,必须要写 -->
     	<property name="securityManager" ref="securityManager"/>
     	<!-- 身份认证失败后的跳转页面 -->
-    	<property name="loginUrl" value="/loginaa.jsp"/>
+    	<property name="loginUrl" value="/MyJspTwo.jsp"/>
     	<!-- 权限认证失败,跳转到指定页面 -->
     	<property name="unauthorizedUrl" value="/MyJsp.jsp"/>
     	<!-- Shiro链接约束配置,既过滤链的定义  anon放行 authc拦截-->
@@ -84,8 +84,11 @@
     			/logins=anon
     			/AddUser=anon
     			/ADD=anon
+    			/js/.**=anon
+    			/css/.**=anon
+    			/js/.**=anon
+    			/*=authc
     			
-    			/**=authc
     		</value>
     	</property>
     </bean>

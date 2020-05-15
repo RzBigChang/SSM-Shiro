@@ -145,7 +145,11 @@ public class UserController {
 	public String MyJsp() {
 		return "MyJsp";
 	}
-	
+	//跳转页面
+	@RequestMapping("MyJspTwo")
+	public String MyJspTwo() {
+		return "MyJspTwo";
+	}
 	public void print(Object msg,HttpServletResponse rep) throws IOException {
 		String info=JSON.toJSONString(msg);
 		PrintWriter out=rep.getWriter();

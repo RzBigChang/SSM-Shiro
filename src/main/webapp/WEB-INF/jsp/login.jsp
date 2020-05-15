@@ -12,10 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/component.css" />
 <link rel="stylesheet" type="text/css" href="css/component.css" />
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-<script src="js/html5.js"></script>
+<script src="../js/html5.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="js/text.js"></script>
+<script type="text/javascript" src="./js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../js/text.js"></script>
     <base href="<%=basePath%>">
     
     <title>登录</title>
