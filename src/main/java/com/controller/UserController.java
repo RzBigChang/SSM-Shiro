@@ -12,6 +12,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -71,6 +73,8 @@ public class UserController {
 		}
 	}
 	//查询用户回显数据
+	@RequiresRoles("1")
+	@RequiresPermissions("1")
 	@RequestMapping("RequerId")
 	public String getUserById(Map<String,Object>map,int id) {
 		User user=new User();

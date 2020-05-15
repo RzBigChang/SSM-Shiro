@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.dao.UserMapper;
 import com.entity.User;
+import com.entity.UserAndAuthority;
+import com.entity.UserAndRole;
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired
@@ -65,6 +68,20 @@ public class UserServiceImpl implements UserService{
 	public User login(String username) {
 		User user=userMapper.login(username);
 		return user;
+	}
+
+	@Override
+	public List<UserAndRole> RoleQuery(int id) {
+		List<UserAndRole>list=new ArrayList<UserAndRole>();
+		list=userMapper.RoleQuery(id);
+		return list;
+	}
+
+	@Override
+	public List<UserAndAuthority> AuthorityQuery(int id) {
+		List<UserAndAuthority>list=new ArrayList<UserAndAuthority>();
+		list=userMapper.AuthorityQuery(id);
+		return list;
 	}
 
 }

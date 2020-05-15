@@ -11,10 +11,10 @@ function Add(){
 		success:function(josn){
 			if(josn>0){
 				alert("添加成功");
-				lcoation.href="findUser"
+				lcoation.href="login"
 			}else{
 				alert("添加失败")
-				lcoation.href="findUser"
+				lcoation.href="login"
 			}
 		}
 	})
@@ -41,7 +41,6 @@ function Update(){
 	})
 }
 function shan(id){
-	alert("1111111111111");
 	$.ajax({
 		url:"/SSM_Redis/Delete",
 		type:"post",

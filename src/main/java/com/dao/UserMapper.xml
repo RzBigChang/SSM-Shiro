@@ -33,5 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="com.entity.User">
 		SELECT * FROM USER WHERE username=#{username}
 	</select>
-	
+	<!-- 根据查询角色id -->
+	<select id="RoleQuery" resultType="com.entity.UserAndRole">
+	   select * from user_role WHERE userId=#{userId}
+	</select>
+	<!-- 根据权限查询 -->
+	<select id="AuthorityQuery" resultType="com.entity.UserAndAuthority">
+		SELECT * from user_authority where userId=#{userId}
+	</select>
 </mapper>
