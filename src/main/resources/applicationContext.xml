@@ -84,9 +84,7 @@
     			/logins=anon
     			/AddUser=anon
     			/ADD=anon
-    			/js/.**=anon
-    			/css/.**=anon
-    			/js/.**=anon
+    			
     			/*=authc
     			
     		</value>
