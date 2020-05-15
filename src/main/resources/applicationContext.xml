@@ -51,4 +51,51 @@
     </bean>
     <!-- 通过<tx:advice>标签为指定的事物管理器设置事务属性 -->
     <tx:annotation-driven transaction-manager="txManager"/>
-	</beans>
+    
+    <!-- Shiro的配置Bean -->
+    <!-- 加密器 -->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    	<!-- 加密方式 -->
+    	<property name="hashAlgorithmName" value="md5"/>
+    	<!-- 加密等级 -->
+    	<property name="hashIterations" value="2"></property>
+    </bean>
+    <!-- 自定义Realm  id不能改动-->
+    <bean id="myRealm" class="com.realm.MyRealm">
+    	<property name="credentialsMatcher" ref="credentialsMatcher"></property>
+    </bean>
+    <!-- 安全管理器  property中的name不能改用-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    	<property name="realm" ref="myRealm"/>
+    </bean>
+    <!-- Shiro工厂过滤器  id不能改动  property中的name属性不能改动-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<!-- Shiro核心安全接口,必须要写 -->
+    	<property name="securityManager" ref="securityManager"/>
+    	<!-- 身份认证失败后的跳转页面 -->
+    	<property name="loginUrl" value="logins"/>
+    	<!-- 权限认证失败,跳转到指定页面 -->
+    	<property name="unauthorizedUrl" value="logins"/>
+    	<!-- Shiro链接约束配置,既过滤链的定义  anon放行 authc拦截-->
+    	<property name="filterChainDefinitions">
+    		<value>
+    			/login=anon
+    			/ADD=anon
+    			/logins=anon
+    			/AddUser=anon
+    			/Update=authc
+    			/Delete=authc
+    			/fsindUser=authc
+    		</value>
+    	</property>
+    </bean>
+    
+    <!-- 保证实现了shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    
+    <!-- 开启Shiro注解 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  
+  		<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+  	  <property name="securityManager" ref="securityManager"/>  
+    </bean>
+</beans>

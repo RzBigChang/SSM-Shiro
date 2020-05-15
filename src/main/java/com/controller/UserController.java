@@ -5,11 +5,17 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -95,6 +101,30 @@ public class UserController {
 		}else {
 			print(result,res);
 		}
+	}
+	//跳转登录方法
+	@RequestMapping("logins")
+	public String logins() {
+		return "login";
+	}
+	//登录方法
+	@RequestMapping("login")
+	public String login(User user,Map<String,Object>map,HttpServletRequest request,HttpServletResponse resp) {
+		Subject subject=SecurityUtils.getSubject();
+		UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(
+				user.getUsername(),
+				user.getPassword()
+				);
+		try {
+			subject.login(usernamePasswordToken);
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			return "账号密码错误";
+		}catch (AuthorizationException e) {
+			return "没有权限";
+		}
+		return "redirect:/findUser";
+		
 	}
 	public void print(Object msg,HttpServletResponse rep) throws IOException {
 		String info=JSON.toJSONString(msg);

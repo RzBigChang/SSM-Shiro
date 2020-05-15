@@ -10,4 +10,5 @@ public interface UserService {
 	public int addUser(User user);//添加用户信息
 	public int updateUser(User user);//修改用户信息
 	public int delUser(int id);//删除用户信息
+	public User login(String username);//登录方法
 }

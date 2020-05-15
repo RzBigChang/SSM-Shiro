@@ -60,5 +60,11 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+	//登录方法录
+	@Override
+	public User login(String username) {
+		User user=userMapper.login(username);
+		return user;
+	}
 
 }

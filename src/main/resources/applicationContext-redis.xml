@@ -7,9 +7,10 @@
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 导入Redis.properties文件 -->
     <context:property-placeholder order="1" location="classpath:redis.properties" ignore-unresolvable="true"/>
     <!-- Redis -->
-    <!-- 连接池参数 -->
+    <!-- 配置连接池参数 初始化jedis -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.pool.maxIdle}" />
         <property name="minIdle" value="${redis.pool.minIdle}" />
@@ -22,7 +23,7 @@
         <property name="testOnReturn" value="${redis.pool.testOnReturn}" />
         <property name="testWhileIdle" value="${redis.pool.testWhileIdle}"></property>
     </bean>
-
+		<!-- 连接池配置信息 -->
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="poolConfig" ref="jedisPoolConfig" />
         <property name="hostName" value="${redis.host}" />
@@ -32,30 +33,11 @@
         <property name="database" value="${redis.database}" />
         <property name="timeout" value="${redis.timeout}" />
     </bean>
-
+	<!-- 创建Redis模板对象 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    	<!-- 加载连接池的配置 -->
         <property name="connectionFactory" ref="jedisConnectionFactory" />
-
-        <!-- 序列化方式 建议key/hashKey采用StringRedisSerializer -->
-        <property name="keySerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-        </property>
-        <property name="valueSerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
-        </property>
-        <property name="hashKeySerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-        </property>
-        <property name="hashValueSerializer">
-            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
-        </property>
-        <!-- 开启REIDS事务支持 -->
+        <!-- 开启Redis事务支持 -->
         <property name="enableTransactionSupport" value="false" />
     </bean>
-
-    
-
 </beans>

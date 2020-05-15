@@ -29,6 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delUser" parameterType="Integer">
 		delete from user where id=#{id}
 	</delete>
-	
+	<!-- 登录方法 -->
+	<select id="login" resultType="com.entity.User">
+		SELECT * FROM USER WHERE username=#{username}
+	</select>
 	
 </mapper>
